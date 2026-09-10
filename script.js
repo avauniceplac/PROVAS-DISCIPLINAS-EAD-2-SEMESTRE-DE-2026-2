@@ -17,7 +17,7 @@
    por vírgula. Ex.:  const LABS_OCULTOS = ['LAB 5', 'LAB 12'];
    ═══════════════════════════════════════════════════════════════ */
 
-const LABS_OCULTOS = [];
+const LABS_OCULTOS = ['LAB 2/3'];
 const LABS_DESATIVADOS = [];
 
 const DIS = 'disp';
@@ -53,11 +53,11 @@ const labs = [
   { bloco:'A', lab:'LAB 5',  local:'Bloco A, 1º Andar',   turno:'Noite', horario:'17h – 22h',
     d: [DIS, DIS, DIS, DIS, DIS] },
 
-  { bloco:'A', lab:'CEAD',   local:'Bloco A, 1º Andar - Exclusivo NAPA', turno:'Manhã', horario:'08h30 – 12h',
+  { bloco:'A', lab:'CEAD',   local:'Bloco A, 2º Andar - Exclusivo NAPA', turno:'Manhã', horario:'08h30 – 12h',
     d: [DIS, DIS, DIS, DIS, DIS], sab: DIS },
-  { bloco:'A', lab:'CEAD',   local:'Bloco A, 1º Andar - Exclusivo NAPA', turno:'Tarde', horario:'12h – 17h',
+  { bloco:'A', lab:'CEAD',   local:'Bloco A, 2º Andar - Exclusivo NAPA', turno:'Tarde', horario:'12h – 17h',
     d: [DIS, DIS, DIS, DIS, DIS] },
-  { bloco:'A', lab:'CEAD',   local:'Bloco A, 1º Andar - Exclusivo NAPA', turno:'Noite', horario:'17h – 22h',
+  { bloco:'A', lab:'CEAD',   local:'Bloco A, 2º Andar - Exclusivo NAPA', turno:'Noite', horario:'17h – 22h',
     d: [DIS, DIS, DIS, DIS, DIS] },
 
   // ── BLOCO EF ──
