@@ -26,6 +26,12 @@
         var raiz = document.documentElement;
         raiz.setAttribute("data-etapa", estado);
         raiz.setAttribute("data-etapas-carregado", "1");
+        /* Marca o estado de cada etapa do menu no <html>, para o CSS
+           esconder/estilizar os links ANTES da pintura (evita o flash). */
+        ["regulares", "segundaChamada", "recuperacao"].forEach(function (nome) {
+          var st = String((ETAPAS.estado[nome] || "ativa")).trim().toLowerCase();
+          raiz.setAttribute("data-etapa-" + nome.toLowerCase(), st);
+        });
       } catch (e) {}
     })();
   </script>
@@ -209,14 +215,14 @@
 
     <div class="legenda legenda--topo">
       <div class="legenda-grupo">
-        <span class="legenda-rotulo">Turnos:</span>
-        <div class="legenda-item"><span class="turno-ic leg-forma" data-turno="Manhã" id="leg-manha"></span> Manhã <span class="legenda-hora">08h30–12h</span></div>
-        <div class="legenda-item"><span class="turno-ic leg-forma" data-turno="Tarde" id="leg-tarde"></span> Tarde <span class="legenda-hora">12h–17h</span></div>
-        <div class="legenda-item"><span class="turno-ic leg-forma" data-turno="Noite" id="leg-noite"></span> Noite <span class="legenda-hora">17h–22h</span></div>
+        <span class="legenda-rotulo">Horários:</span>
+        <div class="legenda-item">Manhã <span class="legenda-hora">08h30–12h</span></div>
+        <div class="legenda-item">Tarde <span class="legenda-hora">12h–17h</span></div>
+        <div class="legenda-item">Noite <span class="legenda-hora">17h–22h</span></div>
       </div>
       <div class="legenda-grupo">
-        <div class="legenda-item"><span class="status-amostra status-amostra--on"></span> Disponível</div>
-        <div class="legenda-item"><span class="status-amostra status-amostra--off"></span> Indisponível</div>
+        <div class="legenda-item"><span class="turno-chip disp">Verde</span> disponível</div>
+        <div class="legenda-item"><span class="turno-chip indisp">Vermelho</span> indisponível</div>
       </div>
       <div class="legenda-sabado">
         Sábado: laboratórios abertos somente das 08h30 às 12h
@@ -230,12 +236,12 @@
           <tr>
             <th scope="col">Bloco</th>
             <th scope="col">Laboratório</th>
-            <th scope="col"><span class="th-dia">Seg</span><span class="th-data">21/09</span></th>
-            <th scope="col"><span class="th-dia">Ter</span><span class="th-data">22/09</span></th>
-            <th scope="col"><span class="th-dia">Qua</span><span class="th-data">23/09</span></th>
-            <th scope="col"><span class="th-dia">Qui</span><span class="th-data">24/09</span></th>
-            <th scope="col"><span class="th-dia">Sex</span><span class="th-data">25/09</span></th>
-            <th scope="col" class="col-sabado">
+            <th scope="col" class="th-dia-col" data-dia-idx="0" data-data="2026-09-21" data-fim="22:00"><span class="th-dia">Seg</span><span class="th-data">21/09</span></th>
+            <th scope="col" class="th-dia-col" data-dia-idx="1" data-data="2026-09-22" data-fim="22:00"><span class="th-dia">Ter</span><span class="th-data">22/09</span></th>
+            <th scope="col" class="th-dia-col" data-dia-idx="2" data-data="2026-09-23" data-fim="22:00"><span class="th-dia">Qua</span><span class="th-data">23/09</span></th>
+            <th scope="col" class="th-dia-col" data-dia-idx="3" data-data="2026-09-24" data-fim="22:00"><span class="th-dia">Qui</span><span class="th-data">24/09</span></th>
+            <th scope="col" class="th-dia-col" data-dia-idx="4" data-data="2026-09-25" data-fim="22:00"><span class="th-dia">Sex</span><span class="th-data">25/09</span></th>
+            <th scope="col" class="col-sabado th-dia-col" data-dia-idx="5" data-data="2026-09-26" data-fim="12:00">
               <span class="th-dia">Sáb</span>
               <span class="th-data">26/09</span>
               <span class="th-nota">somente até 12h</span>

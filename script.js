@@ -17,7 +17,7 @@
    por vírgula. Ex.:  const LABS_OCULTOS = ['LAB 5', 'LAB 12'];
    ═══════════════════════════════════════════════════════════════ */
 
-const LABS_OCULTOS = ['LAB 2/3'];
+const LABS_OCULTOS = [];
 const LABS_DESATIVADOS = [];
 
 const DIS = 'disp';
@@ -114,16 +114,12 @@ function labDesativado(row) { return _desativados.includes(normNome(row.lab)); }
 const DIAS_SEMANA = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'];
 const DATAS_SEMANA = ['21/09', '22/09', '23/09', '24/09', '25/09'];
 const TURNOS = ['Manhã', 'Tarde', 'Noite'];
+const HORARIO_TURNO = { 'Manhã': '08h30–12h', 'Tarde': '12h–17h', 'Noite': '17h–22h' };
 
 /* Ícone de localização (pin) para o local do laboratório */
 const ICON_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.4-8 12-8 12s-8-7.6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
 
-/* Ícones de turno (Lucide, embutidos inline para não depender de CDN em runtime) */
-const ICON_TURNO = {
-  'Manhã': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></svg>',
-  'Tarde': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 10V2M5.6 8.6l1.4 1.4M2 18h2M20 18h2M17 8.6l1.4-1.4M22 22H2"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>',
-  'Noite': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>'
-};
+/* Turnos exibidos como chips de texto (Manhã/Tarde/Noite) — ver celulaDia() */
 
 /* Agrupa os turnos (Manhã/Tarde/Noite) de cada laboratório numa só entrada */
 function agruparPorLab(lista) {
@@ -152,13 +148,14 @@ function turnoDisp(grupo, turno, dia, desativado) {
 
 /* Célula de um dia: os 3 ícones de turno, acesos (disp) ou apagados (indisp) */
 function celulaDia(grupo, dia, diaLabel, desativado) {
-  const icones = TURNOS.map(t => {
+  const chips = TURNOS.map(t => {
     const disp = turnoDisp(grupo, t, dia, desativado);
-    const cls = disp ? 'on' : 'off';
+    const cls = disp ? 'disp' : 'indisp';
     const txt = disp ? 'disponível' : 'indisponível';
-    return `<span class="turno-ic ${cls}" data-turno="${t}" role="img" aria-label="${t}: ${txt}" title="${diaLabel} · ${t}: ${txt}">${ICON_TURNO[t]}</span>`;
+    const hora = HORARIO_TURNO[t] || '';
+    return `<button type="button" class="turno-chip ${cls}" data-turno="${t}" data-hora="${hora}" data-dia="${diaLabel}" data-disp="${disp ? '1' : '0'}" aria-label="${diaLabel} · ${t} (${hora}): ${txt}">${t}</button>`;
   }).join('');
-  return `<div class="turnos-cel">${icones}</div>`;
+  return `<div class="turnos-cel">${chips}</div>`;
 }
 
 function renderTable() {
@@ -203,13 +200,14 @@ function renderTable() {
   });
 
   aplicarFiltroTurno();
+  if (typeof window.aplicarEstadoDias === 'function') window.aplicarEstadoDias();
 }
 
 /* Realça o turno selecionado (esmaece os demais); 'todos' mostra todos normalmente */
 function aplicarFiltroTurno() {
   const tbody = document.getElementById('tbody-labs');
   if (!tbody) return;
-  tbody.querySelectorAll('.turno-ic').forEach(ic => {
+  tbody.querySelectorAll('.turno-chip').forEach(ic => {
     if (filtroTurno === 'todos' || ic.dataset.turno === filtroTurno) {
       ic.classList.remove('turno-oculto');
     } else {
@@ -241,12 +239,151 @@ function filtrarTurno(turno, btn) {
   aplicarFiltroTurno();
 }
 
-function popularLegenda() {
-  const map = { 'leg-manha': 'Manhã', 'leg-tarde': 'Tarde', 'leg-noite': 'Noite' };
-  Object.entries(map).forEach(([id, turno]) => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = ICON_TURNO[turno];
-  });
-}
+document.addEventListener('DOMContentLoaded', renderTable);
 
-document.addEventListener('DOMContentLoaded', () => { renderTable(); popularLegenda(); });
+/* ─────────────────────────────────────────────
+   ESTADO DOS DIAS (passado / hoje) — horário de Brasília
+   • Dia vira "passado" após o horário de encerramento (22h úteis, 12h sáb).
+   • Dia atual recebe destaque "HOJE".
+   ───────────────────────────────────────────── */
+(function () {
+  // Retorna {ano, mes, dia, hora, min} agora no fuso de Brasília
+  function agoraBrasilia() {
+    const fmt = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Sao_Paulo',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hour12: false
+    });
+    const p = {};
+    fmt.formatToParts(new Date()).forEach(x => { p[x.type] = x.value; });
+    // hour pode vir "24" à meia-noite em alguns ambientes — normaliza
+    let hora = parseInt(p.hour, 10); if (hora === 24) hora = 0;
+    return {
+      data: `${p.year}-${p.month}-${p.day}`,
+      minutos: hora * 60 + parseInt(p.minute, 10)
+    };
+  }
+
+  // Classifica um dia como 'passado' | 'hoje' | 'futuro'
+  function estadoDoDia(dataISO, fimHHMM) {
+    const now = agoraBrasilia();
+    if (dataISO < now.data) return 'passado';
+    if (dataISO > now.data) return 'futuro';
+    // mesmo dia: compara com o horário de encerramento
+    const [h, m] = fimHHMM.split(':').map(Number);
+    const fimMin = h * 60 + m;
+    return now.minutos >= fimMin ? 'passado' : 'hoje';
+  }
+
+  function aplicarEstadoDias() {
+    const ths = document.querySelectorAll('.th-dia-col');
+    if (!ths.length) return;
+
+    ths.forEach(th => {
+      const idx = th.dataset.diaIdx;
+      const estado = estadoDoDia(th.dataset.data, th.dataset.fim || '22:00');
+
+      // limpa marcações anteriores
+      th.classList.remove('dia-passado', 'dia-hoje');
+      th.querySelector('.th-selo-passado')?.remove();
+      th.querySelector('.th-selo-hoje')?.remove();
+
+      if (estado === 'passado') {
+        th.classList.add('dia-passado');
+        const selo = document.createElement('span');
+        selo.className = 'th-selo-passado';
+        selo.textContent = 'Encerrado';
+        th.appendChild(selo);
+      } else if (estado === 'hoje') {
+        th.classList.add('dia-hoje');
+        const selo = document.createElement('span');
+        selo.className = 'th-selo-hoje';
+        selo.textContent = 'HOJE';
+        th.appendChild(selo);
+      }
+
+      // aplica nas células do corpo com o mesmo índice de dia
+      // (as 5 primeiras colunas de dia + sábado = colunas 4..9 do tr)
+      const colStatus = document.querySelectorAll('tbody tr:not(.bloco-header) td.status-cell');
+      // nada aqui: tratamos por linha abaixo
+    });
+
+    // Marca as células do corpo por posição de coluna
+    document.querySelectorAll('tbody tr:not(.bloco-header)').forEach(tr => {
+      const cels = tr.querySelectorAll('td.status-cell');
+      cels.forEach((td, i) => {
+        const th = ths[i];
+        td.classList.remove('dia-passado', 'dia-hoje');
+        if (!th) return;
+        if (th.classList.contains('dia-passado')) td.classList.add('dia-passado');
+        else if (th.classList.contains('dia-hoje')) td.classList.add('dia-hoje');
+      });
+    });
+  }
+
+  // roda depois que a tabela é montada
+  window.aplicarEstadoDias = aplicarEstadoDias;
+  document.addEventListener('DOMContentLoaded', function () {
+    aplicarEstadoDias();
+    // reavalia a cada minuto (caso o aluno deixe a página aberta cruzando o horário)
+    setInterval(aplicarEstadoDias, 60 * 1000);
+  });
+})();
+
+/* ─────────────────────────────────────────────
+   BALÃO (popover) ao clicar/tocar num chip de turno
+   Mostra: "Manhã (08h30–12h) — Disponível neste dia"
+   ───────────────────────────────────────────── */
+(function () {
+  let pop = null;
+
+  function fecharPop() {
+    if (pop) { pop.remove(); pop = null; }
+    document.querySelectorAll('.turno-chip.chip-ativo').forEach(c => c.classList.remove('chip-ativo'));
+  }
+
+  function abrirPop(chip) {
+    fecharPop();
+    const turno = chip.dataset.turno;
+    const hora = chip.dataset.hora;
+    const disp = chip.dataset.disp === '1';
+    const status = disp ? 'Disponível neste dia' : 'Indisponível neste dia';
+
+    pop = document.createElement('div');
+    pop.className = 'turno-pop ' + (disp ? 'disp' : 'indisp');
+    pop.setAttribute('role', 'status');
+    pop.innerHTML =
+      `<span class="turno-pop-titulo">${turno} <span class="turno-pop-hora">(${hora})</span></span>` +
+      `<span class="turno-pop-status">${status}</span>`;
+    document.body.appendChild(pop);
+    chip.classList.add('chip-ativo');
+
+    // Posiciona acima do chip, centralizado
+    const r = chip.getBoundingClientRect();
+    const pr = pop.getBoundingClientRect();
+    let left = r.left + window.scrollX + (r.width - pr.width) / 2;
+    let top = r.top + window.scrollY - pr.height - 10;
+    // Mantém dentro da tela
+    const margem = 8;
+    left = Math.max(margem + window.scrollX, Math.min(left, window.scrollX + document.documentElement.clientWidth - pr.width - margem));
+    // Se não couber acima, mostra abaixo
+    if (top < window.scrollY + margem) top = r.bottom + window.scrollY + 10;
+    pop.style.left = left + 'px';
+    pop.style.top = top + 'px';
+  }
+
+  document.addEventListener('click', function (e) {
+    const chip = e.target.closest('.turno-chip');
+    if (chip) {
+      e.stopPropagation();
+      if (chip.classList.contains('chip-ativo')) { fecharPop(); }
+      else { abrirPop(chip); }
+      return;
+    }
+    fecharPop();
+  });
+
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fecharPop(); });
+  window.addEventListener('resize', fecharPop);
+  window.addEventListener('scroll', fecharPop, true);
+})();
