@@ -17,7 +17,7 @@
    por vírgula. Ex.:  const LABS_OCULTOS = ['LAB 5', 'LAB 12'];
    ═══════════════════════════════════════════════════════════════ */
 
-const LABS_OCULTOS = ['LAB 2/3'];
+const LABS_OCULTOS = [];
 const LABS_DESATIVADOS = [];
 
 const DIS = 'disp';
@@ -27,73 +27,73 @@ const labs = [
   // ── BLOCO A ──
   { bloco:'A', lab:'LAB 1',  local:'Bloco A, 1º Andar', turno:'Manhã', horario:'08h30 – 12h',
     d: [DIS, DIS, DIS, DIS, DIS], sab: DIS },
-  { bloco:'A', lab:'LAB 1',  local:'Bloco A, 1º Andar', turno:'Tarde', horario:'12h – 17h',
+  { bloco:'A', lab:'LAB 1',  local:'Bloco A, 1º Andar', turno:'Tarde', horario:'12h – 18h',
     d: [IND, IND, IND, IND, IND] },
-  { bloco:'A', lab:'LAB 1',  local:'Bloco A, 1º Andar', turno:'Noite', horario:'17h – 22h',
+  { bloco:'A', lab:'LAB 1',  local:'Bloco A, 1º Andar', turno:'Noite', horario:'18h – 22h',
     d: [DIS, DIS, DIS, DIS, DIS] },
 
   { bloco:'A', lab:'LAB 2/3', local:'Bloco A, 1º Andar', turno:'Manhã', horario:'08h30 – 12h',
     d: [DIS, DIS, DIS, DIS, DIS], sab: DIS },
-  { bloco:'A', lab:'LAB 2/3', local:'Bloco A, 1º Andar', turno:'Tarde', horario:'12h – 17h',
+  { bloco:'A', lab:'LAB 2/3', local:'Bloco A, 1º Andar', turno:'Tarde', horario:'12h – 18h',
     d: [IND, IND, IND, IND, IND] },
-  { bloco:'A', lab:'LAB 2/3', local:'Bloco A, 1º Andar', turno:'Noite', horario:'17h – 22h',
+  { bloco:'A', lab:'LAB 2/3', local:'Bloco A, 1º Andar', turno:'Noite', horario:'18h – 22h',
     d: [DIS, DIS, DIS, DIS, DIS] },
 
   { bloco:'A', lab:'LAB 4',  local:'Bloco A, 1º Andar', turno:'Manhã', horario:'08h30 – 12h',
     d: [DIS, DIS, DIS, DIS, DIS], sab: DIS },
-  { bloco:'A', lab:'LAB 4',  local:'Bloco A, 1º Andar', turno:'Tarde', horario:'12h – 17h',
+  { bloco:'A', lab:'LAB 4',  local:'Bloco A, 1º Andar', turno:'Tarde', horario:'12h – 18h',
     d: [IND, IND, IND, IND, IND] },
-  { bloco:'A', lab:'LAB 4',  local:'Bloco A, 1º Andar', turno:'Noite', horario:'17h – 22h',
+  { bloco:'A', lab:'LAB 4',  local:'Bloco A, 1º Andar', turno:'Noite', horario:'18h – 22h',
     d: [DIS, DIS, DIS, DIS, DIS] },
 
   { bloco:'A', lab:'LAB 5',  local:'Bloco A, 1º Andar',   turno:'Manhã', horario:'08h30 – 12h',
     d: [DIS, DIS, DIS, DIS, DIS], sab: DIS },
-  { bloco:'A', lab:'LAB 5',  local:'Bloco A, 1º Andar',   turno:'Tarde', horario:'12h – 17h',
+  { bloco:'A', lab:'LAB 5',  local:'Bloco A, 1º Andar',   turno:'Tarde', horario:'12h – 18h',
     d: [IND, IND, IND, IND, IND] },
-  { bloco:'A', lab:'LAB 5',  local:'Bloco A, 1º Andar',   turno:'Noite', horario:'17h – 22h',
+  { bloco:'A', lab:'LAB 5',  local:'Bloco A, 1º Andar',   turno:'Noite', horario:'18h – 22h',
     d: [DIS, DIS, DIS, DIS, DIS] },
 
-  { bloco:'A', lab:'CEAD',   local:'Bloco A, 2º Andar - Exclusivo NAPA', turno:'Manhã', horario:'08h30 – 12h',
+  { bloco:'A', lab:'CEAD',   local:'Bloco A, 1º Andar - Exclusivo NAPA', turno:'Manhã', horario:'08h30 – 12h',
     d: [DIS, DIS, DIS, DIS, DIS], sab: DIS },
-  { bloco:'A', lab:'CEAD',   local:'Bloco A, 2º Andar - Exclusivo NAPA', turno:'Tarde', horario:'12h – 17h',
+  { bloco:'A', lab:'CEAD',   local:'Bloco A, 1º Andar - Exclusivo NAPA', turno:'Tarde', horario:'12h – 18h',
     d: [DIS, DIS, DIS, DIS, DIS] },
-  { bloco:'A', lab:'CEAD',   local:'Bloco A, 2º Andar - Exclusivo NAPA', turno:'Noite', horario:'17h – 22h',
+  { bloco:'A', lab:'CEAD',   local:'Bloco A, 1º Andar - Exclusivo NAPA', turno:'Noite', horario:'18h – 22h',
     d: [DIS, DIS, DIS, DIS, DIS] },
 
   // ── BLOCO EF ──
   { bloco:'EF', lab:'LAB 7',  local:'Bloco EF, 4º Andar', turno:'Manhã', horario:'08h30 – 12h',
     d: [DIS, DIS, DIS, DIS, DIS], sab: DIS },
-  { bloco:'EF', lab:'LAB 7',  local:'Bloco EF, 4º Andar', turno:'Tarde', horario:'12h – 17h',
+  { bloco:'EF', lab:'LAB 7',  local:'Bloco EF, 4º Andar', turno:'Tarde', horario:'12h – 18h',
     d: [DIS, DIS, DIS, DIS, DIS] },
-  { bloco:'EF', lab:'LAB 7',  local:'Bloco EF, 4º Andar', turno:'Noite', horario:'17h – 22h',
+  { bloco:'EF', lab:'LAB 7',  local:'Bloco EF, 4º Andar', turno:'Noite', horario:'18h – 22h',
     d: [DIS, DIS, DIS, DIS, DIS] },
 
   { bloco:'EF', lab:'LAB 9',  local:'Bloco EF, 4º Andar', turno:'Manhã', horario:'08h30 – 12h',
     d: [DIS, DIS, DIS, DIS, DIS], sab: DIS },
-  { bloco:'EF', lab:'LAB 9',  local:'Bloco EF, 4º Andar', turno:'Tarde', horario:'12h – 17h',
+  { bloco:'EF', lab:'LAB 9',  local:'Bloco EF, 4º Andar', turno:'Tarde', horario:'12h – 18h',
     d: [DIS, DIS, DIS, DIS, DIS] },
-  { bloco:'EF', lab:'LAB 9',  local:'Bloco EF, 4º Andar', turno:'Noite', horario:'17h – 22h',
+  { bloco:'EF', lab:'LAB 9',  local:'Bloco EF, 4º Andar', turno:'Noite', horario:'18h – 22h',
     d: [DIS, DIS, DIS, DIS, DIS] },
 
   { bloco:'EF', lab:'LAB 11', local:'Bloco EF, 1º Andar',   turno:'Manhã', horario:'08h30 – 12h',
     d: [DIS, DIS, DIS, DIS, DIS], sab: DIS },
-  { bloco:'EF', lab:'LAB 11', local:'Bloco EF, 1º Andar',   turno:'Tarde', horario:'12h – 17h',
+  { bloco:'EF', lab:'LAB 11', local:'Bloco EF, 1º Andar',   turno:'Tarde', horario:'12h – 18h',
     d: [DIS, DIS, DIS, DIS, DIS] },
-  { bloco:'EF', lab:'LAB 11', local:'Bloco EF, 1º Andar',   turno:'Noite', horario:'17h – 22h',
+  { bloco:'EF', lab:'LAB 11', local:'Bloco EF, 1º Andar',   turno:'Noite', horario:'18h – 22h',
     d: [DIS, DIS, DIS, DIS, DIS] },
 
   { bloco:'EF', lab:'LAB 12', local:'Bloco EF, 4º Andar',   turno:'Manhã', horario:'08h30 – 12h',
     d: [DIS, DIS, DIS, DIS, DIS], sab: DIS },
-  { bloco:'EF', lab:'LAB 12', local:'Bloco EF, 4º Andar',   turno:'Tarde', horario:'12h – 17h',
+  { bloco:'EF', lab:'LAB 12', local:'Bloco EF, 4º Andar',   turno:'Tarde', horario:'12h – 18h',
     d: [DIS, DIS, DIS, DIS, DIS] },
-  { bloco:'EF', lab:'LAB 12', local:'Bloco EF, 4º Andar',   turno:'Noite', horario:'17h – 22h',
+  { bloco:'EF', lab:'LAB 12', local:'Bloco EF, 4º Andar',   turno:'Noite', horario:'18h – 22h',
     d: [DIS, DIS, DIS, DIS, DIS] },
 
   { bloco:'EF', lab:'LAB 13', local:'Bloco EF, 2º Andar', turno:'Manhã', horario:'08h30 – 12h',
     d: [DIS, DIS, DIS, DIS, DIS], sab: DIS },
-  { bloco:'EF', lab:'LAB 13', local:'Bloco EF, 2º Andar', turno:'Tarde', horario:'12h – 17h',
+  { bloco:'EF', lab:'LAB 13', local:'Bloco EF, 2º Andar', turno:'Tarde', horario:'12h – 18h',
     d: [DIS, DIS, DIS, DIS, DIS] },
-  { bloco:'EF', lab:'LAB 13', local:'Bloco EF, 2º Andar', turno:'Noite', horario:'17h – 22h',
+  { bloco:'EF', lab:'LAB 13', local:'Bloco EF, 2º Andar', turno:'Noite', horario:'18h – 22h',
     d: [DIS, DIS, DIS, DIS, DIS] },
 ];
 
@@ -114,7 +114,7 @@ function labDesativado(row) { return _desativados.includes(normNome(row.lab)); }
 const DIAS_SEMANA = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'];
 const DATAS_SEMANA = ['21/09', '22/09', '23/09', '24/09', '25/09'];
 const TURNOS = ['Manhã', 'Tarde', 'Noite'];
-const HORARIO_TURNO = { 'Manhã': '08h30–12h', 'Tarde': '12h–17h', 'Noite': '17h–22h' };
+const HORARIO_TURNO = { 'Manhã': '08h30–12h', 'Tarde': '12h–18h', 'Noite': '18h–22h' };
 
 /* Ícone de localização (pin) para o local do laboratório */
 const ICON_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.4-8 12-8 12s-8-7.6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';

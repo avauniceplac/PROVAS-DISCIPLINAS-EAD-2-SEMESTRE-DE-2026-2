@@ -36,6 +36,7 @@
     })();
   </script>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="acessibilidade.css">
 </head>
 <body>
 
@@ -217,8 +218,8 @@
       <div class="legenda-grupo">
         <span class="legenda-rotulo">Horários:</span>
         <div class="legenda-item">Manhã <span class="legenda-hora">08h30–12h</span></div>
-        <div class="legenda-item">Tarde <span class="legenda-hora">12h–17h</span></div>
-        <div class="legenda-item">Noite <span class="legenda-hora">17h–22h</span></div>
+        <div class="legenda-item">Tarde <span class="legenda-hora">12h–18h</span></div>
+        <div class="legenda-item">Noite <span class="legenda-hora">18h–22h</span></div>
       </div>
       <div class="legenda-grupo">
         <div class="legenda-item"><span class="turno-chip disp">Verde</span> disponível</div>
@@ -267,5 +268,20 @@
 <script src="etapas.js"></script>
 <script src="config-aviso.js"></script>
 <script src="aviso.js"></script>
+
+<!-- ── ACESSIBILIDADE ── -->
+<!-- VLibras (tradução para Libras — ferramenta oficial do Governo Federal) -->
+<div vw class="enabled">
+  <div vw-access-button class="active"></div>
+  <div vw-plugin-wrapper>
+    <div class="vw-plugin-top-wrapper"></div>
+  </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+  new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
+<!-- Widget de acessibilidade próprio (fonte, contraste, links) -->
+<script src="acessibilidade.js"></script>
 </body>
 </html>
