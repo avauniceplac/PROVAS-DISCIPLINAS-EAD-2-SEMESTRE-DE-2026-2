@@ -17,7 +17,7 @@
    por vírgula. Ex.:  const LABS_OCULTOS = ['LAB 5', 'LAB 12'];
    ═══════════════════════════════════════════════════════════════ */
 
-const LABS_OCULTOS = [];
+const LABS_OCULTOS = ['LAB 2/3'];
 const LABS_DESATIVADOS = [];
 
 const DIS = 'disp';
