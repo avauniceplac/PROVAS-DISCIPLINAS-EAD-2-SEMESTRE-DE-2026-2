@@ -13,7 +13,9 @@ const AVISO = {
   segundaChamada: {
     ativo:    "off",
     titulo:   "Atenção",
-    mensagem: "Escreva aqui o aviso específico da 2ª chamada.",
+    mensagem: "Destinada exclusivamente aos estudantes que não realizaram a prova de 1ª chamada das disciplinas EAD do 1º bimestre/1° módulo de 2026/2, efetuaram a solicitação pelo Portal do Aluno e tiveram o pedido deferido pela coordenação do curso (necessário apresentação de justificativa legal).
+
+",
   },
 
   /* ===== RECUPERAÇÃO / PROVA FINAL (provas-finais.html e páginas internas) ===== */
